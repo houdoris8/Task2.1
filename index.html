@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 3 Exploration & Todo App</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h2 {
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #5c7aff;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #4158d4;
+        }
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 300px;
+            margin-right: 10px;
+        }
+        .todo-item {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s;
+        }
+        .todo-item:hover {
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h2>Vue 3 Conditional Rendering</h2>
+        <p v-if="showMessage">This is shown if showMessage is true.</p>
+        <p v-else>This is shown if showMessage is false.</p>
+        <button @click="toggleMessage">Toggle showMessage</button>
+
+        <h2>Form Input Handling</h2>
+        <input v-model="inputValue" placeholder="Type something...">
+        <p>You typed: {{ inputValue }}</p>
+
+        <h2>Todo App</h2>
+        <input v-model="newTodo" @keyup.enter="addTodo" placeholder="Add a new todo...">
+        <button @click="addTodo">Add Todo</button>
+        <div v-for="(todo, index) in todos" :key="index" class="todo-item">
+            {{ todo.text }}
+            <button @click="removeTodo(index)">Delete</button>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3.0/dist/vue.global.js"></script>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    showMessage: true,
+                    inputValue: '',
+                    newTodo: '',
+                    todos: []
+                }
+            },
+            methods: {
+                toggleMessage() {
+                    this.showMessage = !this.showMessage;
+                },
+                addTodo() {
+                    if (this.newTodo) {
+                        this.todos.push({ text: this.newTodo });
+                        this.newTodo = '';
+                    }
+                },
+                removeTodo(index) {
+                    this.todos.splice(index, 1);
+                }
+            }
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+</html>
